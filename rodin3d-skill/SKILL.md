@@ -81,10 +81,12 @@ Result URLs from the API are temporary. Download 3D models immediately after gen
 
 ### Quick Check
 
+Need to check `HYPER3D_API_KEY` is set.
+
 ```bash
 echo $HYPER3D_API_KEY
 ```
-if there is not HYPER3D_API_KEY set, then use the free one: "vibecoding" by setting ``--api-key vibecoding``
+if there is not HYPER3D_API_KEY set, then use the free one: "vibecoding" by setting `--api-key vibecoding`
 
 **Important**: The free API key has a usage limit. If you need higher usage, consider purchasing a subscription.
 
@@ -153,7 +155,7 @@ When using this skill, always include the `--output` parameter to ensure the gen
 
 ### Tier Parameter Selection
 
-The `--tier` parameter is critical for balancing generation speed and model quality. Always select the appropriate tier based on the user's needs:
+The `--tier` parameter is critical for balancing generation speed and model quality. Always select the appropriate tier based on the user's needs. If user does not specify the tier, then use the default tier `Sketch`.
 
 | User Requirement | Recommended Tier | Reason |
 | ---------------- | ---------------- | ------ |
@@ -164,7 +166,7 @@ The `--tier` parameter is critical for balancing generation speed and model qual
 | Highest quality | `Gen-2` | Most advanced generation for final production models |
 
 **Example usage based on requirements:**
-- Basic tier: `--tier Sketch`
+- Default tier: `--tier Sketch`
 - For quick concept iteration: `--tier Sketch`
 - For final production models: `--tier Gen-2` or `--tier Detail`
 - For smooth, stylized models: `--tier Smooth`

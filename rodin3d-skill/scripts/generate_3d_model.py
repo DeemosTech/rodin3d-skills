@@ -22,7 +22,7 @@ def main():
     mode_group.add_argument("--prompt", help="Text prompt to generate 3D model from")
 
 
-    parser.add_argument("--tier", default="Gen-2",
+    parser.add_argument("--tier", default="Sketch",
                         choices=["Gen-2", "Smooth", "Regular", "Detail", "Sketch"],
                         help="API tier to use (Gen-2, Smooth, Regular, Detail, Sketch)")
     
