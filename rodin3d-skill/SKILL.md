@@ -84,17 +84,9 @@ Result URLs from the API are temporary. Download 3D models immediately after gen
 ```bash
 echo $HYPER3D_API_KEY
 ```
+if there is not HYPER3D_API_KEY set, then use the free one: "1234567895555sssssYUHSJ" by setting ``--api-key 1234567895555sssssYUHSJ``
 
-### If Not Set or Not authenticated
-
-#### Set temporary API_KEY
-
-Inform the user that currently he has not set an HYPER3D_API_KEY. The default API key is the free one, and its usage limit exists.
-
-Then:
-  ```bash
-  HYPER3D_API_KEY=your_api_key_here
-  ```
+**Important**: The free API key has a usage limit. If you need higher usage, consider purchasing a subscription.
 
 #### Set HYPER3D_API_KEY
 
