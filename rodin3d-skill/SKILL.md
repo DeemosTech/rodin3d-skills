@@ -123,28 +123,32 @@ Make sure you can run the scripts from the skill directory.
 ### 1. Generate 3D Model from Image
 
 ```bash
-python <skill_dir>/scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --output path/to/output_dir --api-key $HYPER3D_API_KEY
 ```
 
 ### 2. Quick Generate 3D Model from Image
 
 ```bash
-python <skill_dir>/scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --tier Sketch --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --tier Sketch --output path/to/output_dir --api-key $HYPER3D_API_KEY
 ```
 
 ### 3. Generate 3D Model from Text
 
 ```bash
-python <skill_dir>/scripts/generate_3d_model.py --prompt "A detailed 3D model of a medieval castle" --geometry-file-format glb --quality high --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --prompt "A detailed 3D model of a medieval castle" --geometry-file-format glb --quality high --output path/to/output_dir --api-key $HYPER3D_API_KEY
 ```
 
 ### 4. Generate 3D Model from Multiple Images
 
 ```bash
-python <skill_dir>/scripts/generate_3d_model.py --images path/to/image1.jpg path/to/image2.jpg --geometry-file-format glb --quality high --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --images path/to/image1.jpg path/to/image2.jpg --geometry-file-format glb --quality high --output path/to/output_dir --api-key $HYPER3D_API_KEY
 ```
 
 ## Important Usage Guidelines
+
+### API KEY Set
+
+Try to input the apikey with `--api-key` when invoking the script. It can be read from the environment variables.
 
 ### Default Download Behavior
 
