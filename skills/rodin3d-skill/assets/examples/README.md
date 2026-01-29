@@ -1,6 +1,6 @@
 # Example Assets
 
-This directory contains example assets for the rodin3d-skills project.
+This directory contains example assets for the rodin3d-skill project.
 
 ## Purpose
 

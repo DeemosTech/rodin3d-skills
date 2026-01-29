@@ -1,5 +1,5 @@
 ---
-name: rodin3d-skills
+name: rodin3d-skill
 description: Converts input images or prompt to 3D models using Hyper3D Rodin Gen-2 API. Use this skill when users want to generate 3D models from images or text, such as product designs, architectural elements, or object reconstructions. This skill handles API communication, task status polling, and 3D model retrieval.
 metadata:
   author: HyperHuman
