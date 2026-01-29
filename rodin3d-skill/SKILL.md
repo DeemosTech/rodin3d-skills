@@ -113,25 +113,25 @@ If your environment is already configured, use these one-liners to generate asse
 ### 1. Generate 3D Model from Image
 
 ```bash
-python scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --output path/to/output_dir
 ```
 
 ### 2. Quick Generate 3D Model from Image
 
 ```bash
-python scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --tier Sketch --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --image path/to/image.jpg --geometry-file-format glb --quality medium --tier Sketch --output path/to/output_dir
 ```
 
 ### 3. Generate 3D Model from Text
 
 ```bash
-python scripts/generate_3d_model.py --prompt "A detailed 3D model of a medieval castle" --geometry-file-format glb --quality high --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --prompt "A detailed 3D model of a medieval castle" --geometry-file-format glb --quality high --output path/to/output_dir
 ```
 
 ### 4. Generate 3D Model from Multiple Images
 
 ```bash
-python scripts/generate_3d_model.py --images path/to/image1.jpg path/to/image2.jpg --geometry-file-format glb --quality high --output path/to/output_dir
+python <skill_dir>/scripts/generate_3d_model.py --images path/to/image1.jpg path/to/image2.jpg --geometry-file-format glb --quality high --output path/to/output_dir
 ```
 
 ## Important Usage Guidelines
