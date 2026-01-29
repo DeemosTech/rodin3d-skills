@@ -85,11 +85,7 @@ Result URLs from the API are temporary. Download 3D models immediately after gen
 echo $HYPER3D_API_KEY
 ```
 
-### If Not Set
-
-Don't worry. The skill will prompt you to set it.
-
-### If Not authenticated
+### If Not Set or Not authenticated
 
 1. **Get a key**: Go to https://hyper3d.ai/api-dashboard → Click **"Create New API Key"** → Create Secret Key
 2. **Save to `.env`** (recommended for persistence):
@@ -109,6 +105,7 @@ Don't worry. The skill will prompt you to set it.
 ## Quick Start Example
 
 If your environment is already configured, use these one-liners to generate assets immediately.
+Make sure you can run the scripts from the skill directory.
 
 ### 1. Generate 3D Model from Image
 
