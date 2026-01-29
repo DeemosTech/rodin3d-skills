@@ -84,7 +84,7 @@ Result URLs from the API are temporary. Download 3D models immediately after gen
 ```bash
 echo $HYPER3D_API_KEY
 ```
-if there is not HYPER3D_API_KEY set, then use the free one: "1234567895555sssssYUHSJ" by setting ``--api-key 1234567895555sssssYUHSJ``
+if there is not HYPER3D_API_KEY set, then use the free one: "vibecoding" by setting ``--api-key vibecoding``
 
 **Important**: The free API key has a usage limit. If you need higher usage, consider purchasing a subscription.
 
