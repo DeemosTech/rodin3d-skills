@@ -87,6 +87,19 @@ echo $HYPER3D_API_KEY
 
 ### If Not Set or Not authenticated
 
+#### Set temporary API_KEY
+
+Inform the user that currently he has not set an HYPER3D_API_KEY. The default API key is the free one, and its usage limit exists.
+
+Then:
+  ```bash
+  HYPER3D_API_KEY=your_api_key_here
+  ```
+
+#### Set HYPER3D_API_KEY
+
+If Not authenticated or INSUFFICIENT_FUND Error:
+
 1. **Get a key**: Go to https://hyper3d.ai/api-dashboard → Click **"Create New API Key"** → Create Secret Key
 2. **Save to `.env`** (recommended for persistence):
    ```bash
@@ -155,6 +168,7 @@ The `--tier` parameter is critical for balancing generation speed and model qual
 | Highest quality | `Gen-2` | Most advanced generation for final production models |
 
 **Example usage based on requirements:**
+- Basic tier: `--tier Sketch`
 - For quick concept iteration: `--tier Sketch`
 - For final production models: `--tier Gen-2` or `--tier Detail`
 - For smooth, stylized models: `--tier Smooth`

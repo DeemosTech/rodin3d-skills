@@ -14,7 +14,7 @@ class Hyper3DAPIClient:
             "Authorization": f"Bearer {self.api_key}"
         }
     
-    def submit_generation_task(self, images=None, prompt=None, tier="Gen-2", geometry_file_format="glb", 
+    def submit_generation_task(self, images=None, prompt=None, tier="Sketch", geometry_file_format="glb", 
                           material="PBR", quality="medium", use_original_alpha=False,
                           seed=None, quality_override=None, TAPose=False,
                           bbox_condition=None, mesh_mode="Quad", addons=None,
