@@ -19,33 +19,84 @@ This skill enables AI to generate high-quality 3D models through the Hyper3D Rod
 
 ### Prerequisites
 
+- [Claude Code CLI](https://code.claude.com) installed
 - Hyper3D API Key (obtain from [https://hyper3d.ai/api-dashboard](https://hyper3d.ai/api-dashboard))
 - Python 3.7+ (for backend scripts)
 
-### Setup
+### Method 1: Install from Marketplace (Recommended)
 
-1. Clone this repository
-2. Install Python dependencies:
+The easiest way to install this skill is through the Claude Code plugin marketplace:
+
+1. **Add the marketplace** (one-time setup):
+   ```bash
+   /plugin marketplace add DeemosTech/rodin3d-skills
+   ```
+
+2. **Install the plugin**:
+   ```bash
+   /plugin install rodin3d-skill@rodin3d-skills
+   ```
+
+3. **Install Python dependencies**:
+   ```bash
+   pip install requests pillow
+   ```
+
+4. **Set your API key**:
+   ```bash
+   export HYPER3D_API_KEY=your_api_key_here
+   ```
+
+   Or create a `.env` file in your project:
+   ```bash
+   echo 'HYPER3D_API_KEY=your_api_key_here' > .env
+   echo '.env' >> .gitignore
+   ```
+
+That's it! The skill is now available as `/rodin3d-skill` in Claude Code.
+
+### Method 2: Manual Installation
+
+If you prefer to install manually or want to develop locally:
+
+1. **Clone this repository**:
+   ```bash
+   git clone https://github.com/DeemosTech/rodin3d-skills.git
+   cd rodin3d-skills
+   ```
+
+2. **Install Python dependencies**:
+   ```bash
+   cd skills/rodin3d-skill
+   pip install -r requirements.txt
+   ```
+
+3. **Add the local marketplace**:
+   ```bash
+   /plugin marketplace add /path/to/rodin3d-skills
+   /plugin install rodin3d-skill@rodin3d-skills
+   ```
+
+4. **Set your API key** (same as Method 1, step 4)
+
+### Verify Installation
+
+After installation, verify the skill is available:
 
 ```bash
-cd skills/rodin3d-skill
-pip install -r requirements.txt
+/plugin list
 ```
 
-3. Set your Hyper3D API key as an environment variable:
+You should see `rodin3d-skill` in the list of enabled plugins.
+
+### Updating the Plugin
+
+To update to the latest version:
 
 ```bash
-export HYPER3D_API_KEY=your_api_key_here
+/plugin marketplace update rodin3d-skills
+/plugin update rodin3d-skill@rodin3d-skills
 ```
-
-Alternatively, create a `.env` file:
-
-```bash
-echo 'HYPER3D_API_KEY=your_api_key_here' > .env
-echo '.env' >> .gitignore
-```
-
-4. Install the skill.
 
 ## Usage
 
@@ -171,9 +222,13 @@ python scripts/generate_3d_model.py \
 ## Project Structure
 
 ```
-rodin3d-skills-git/
+rodin3d-skills/
+├── .claude-plugin/
+│   └── marketplace.json             # Marketplace configuration
 ├── skills/
 │   └── rodin3d-skill/
+│       ├── .claude-plugin/
+│       │   └── plugin.json          # Plugin manifest
 │       ├── SKILL.md                 # Skill documentation
 │       ├── requirements.txt         # Python dependencies
 │       ├── assets/
