@@ -6,17 +6,18 @@
   },
   "metadata": {
     "description": "Claude Code plugins for generating 3D models using Hyper3D Rodin Gen-2 API",
-    "version": "1.0.0",
-    "pluginRoot": "./skills"
+    "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "rodin3d-skill",
       "source": "./skills/rodin3d-skill",
+      "strict": false,
+      "skills": ["./"],
       "description": "Converts input images or prompt to 3D models using Hyper3D Rodin Gen-2 API. Use this skill when users want to generate 3D models from images or text, such as product designs, architectural elements, or object reconstructions.",
       "version": "1.0.0",
       "author": {
-        "name": "HyperHuman"
+        "name": "Deemos Hyper3D"
       },
       "homepage": "https://hyper3d.ai",
       "repository": "https://github.com/DeemosTech/rodin3d-skills",
