@@ -219,28 +219,6 @@ python scripts/generate_3d_model.py \
 
 **Download links expire in 10 minutes**: API result URLs are temporary. Download 3D models immediately after generation completes. Do not store or cache the URLs themselves.
 
-## Project Structure
-
-```
-rodin3d-skills/
-├── .claude-plugin/
-│   └── marketplace.json             # Marketplace configuration
-├── skills/
-│   └── rodin3d-skill/
-│       ├── .claude-plugin/
-│       │   └── plugin.json          # Plugin manifest
-│       ├── SKILL.md                 # Skill documentation
-│       ├── requirements.txt         # Python dependencies
-│       ├── assets/
-│       │   └── examples/
-│       │       └── README.md        # Example documentation
-│       └── scripts/
-│           ├── api_client.py        # API client implementation
-│           ├── generate_3d_model.py # Main generation script
-│           └── image_utils.py       # Image processing utilities
-└── README.md                        # This file
-```
-
 ## API Endpoints
 
 | Endpoint | Purpose |
