@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "rodin3d-skill",
-      "source": "./rodin3d-skill",
+      "source": "./skills/rodin3d-skill",
       "description": "Converts input images or prompt to 3D models using Hyper3D Rodin Gen-2 API. Use this skill when users want to generate 3D models from images or text, such as product designs, architectural elements, or object reconstructions.",
       "version": "1.0.0",
       "author": {
