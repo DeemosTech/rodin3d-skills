@@ -3,7 +3,7 @@ import requests
 import time
 
 class Hyper3DAPIClient:
-    """Hyper3D Rodin Gen-2 API client for handling API communication"""
+    """Hyper3D Rodin Gen-2.5 API client for handling API communication"""
     
     def __init__(self, api_key=None):
         self.api_key = api_key or os.environ.get("HYPER3D_API_KEY")
@@ -14,18 +14,23 @@ class Hyper3DAPIClient:
             "Authorization": f"Bearer {self.api_key}"
         }
     
-    def submit_generation_task(self, images=None, prompt=None, tier="Sketch", geometry_file_format="glb", 
+    def submit_generation_task(self, images=None, prompt=None, tier="Gen-2.5-Medium", geometry_file_format="glb", 
                           material="PBR", quality="medium", use_original_alpha=False,
                           seed=None, quality_override=None, TAPose=False,
-                          bbox_condition=None, mesh_mode="Quad", addons=None,
-                          preview_render=False):
+                          bbox_condition=None, mesh_mode="Raw", addons=None,
+                          preview_render=False, hd_texture=False, texture_delight=False,
+                          texture_mode=None, is_micro=False,
+                          geometry_instruct_mode="faithful"):
         """
-        Submit 3D model generation task to Hyper3D Rodin Gen-2 API
+        Submit 3D model generation task to Hyper3D Rodin Gen-2.5 API
         
         Args:
             images: List of image files (up to 5 images)
             prompt: Text prompt (optional)
-            tier: Generation tier (default "Gen-2", options: "Smooth", "Regular", "Detail", "Sketch")
+            tier: Generation tier (default "Gen-2.5-Medium", options: 
+                  "Gen-2.5-Extreme-Low", "Gen-2.5-Low", "Gen-2.5-Medium", 
+                  "Gen-2.5-High", "Gen-2.5-Extreme-High", 
+                  "Gen-2", "Smooth", "Regular", "Detail", "Sketch")
             geometry_file_format: Output format ("glb", "usdz", "fbx", "obj", "stl")
             material: Material type ("PBR", "Shaded", "All")
             quality: Quality level ("high", "medium", "low", "extra-low")
@@ -37,6 +42,11 @@ class Hyper3DAPIClient:
             mesh_mode: Mesh mode ("Raw" or "Quad")
             addons: Addon features list (e.g., ["HighPack"])
             preview_render: Whether to generate preview render (default False)
+            hd_texture: Whether to generate HD texture (default False)
+            texture_delight: Whether to use texture delight feature (default False)
+            texture_mode: Texture mode (optional)
+            is_micro: Whether the object is micro-sized (default False)
+            geometry_instruct_mode: Geometry instruction mode ("faithful" or other options)
             
         Returns:
             dict: API response data containing subscription_key
@@ -64,7 +74,11 @@ class Hyper3DAPIClient:
             "quality": quality,
             "use_original_alpha": str(use_original_alpha).lower(),
             "TAPose": str(TAPose).lower(),
-            "preview_render": str(preview_render).lower()
+            "preview_render": str(preview_render).lower(),
+            "hd_texture": str(hd_texture).lower(),
+            "texture_delight": str(texture_delight).lower(),
+            "is_micro": str(is_micro).lower(),
+            "geometry_instruct_mode": geometry_instruct_mode
         }
         
         # Add optional parameters
@@ -86,6 +100,9 @@ class Hyper3DAPIClient:
         if addons:
             data["addons"] = ",".join(addons)
         
+        if texture_mode:
+            data["texture_mode"] = texture_mode
+        
         try:
             # Send API request (using multipart/form-data)
             response = requests.post(
@@ -105,6 +122,13 @@ class Hyper3DAPIClient:
             return result
             
         except requests.exceptions.RequestException as e:
+            print(requests.post(
+                self.api_url,
+                headers=self.headers,
+                files=files,
+                data=data,
+                timeout=300  # 5 minutes timeout
+            ).text)
             raise Exception(f"API request failed: {str(e)}")
     
     def check_task_status(self, subscription_key):
@@ -159,18 +183,24 @@ class Hyper3DAPIClient:
         except requests.exceptions.RequestException as e:
             raise Exception(f"Download request failed: {str(e)}")
     
-    def generate_3d_model(self, images=None, prompt=None, tier="Gen-2", geometry_file_format="glb", 
-                        quality="medium", material="PBR", mesh_mode="Quad",
+    def generate_3d_model(self, images=None, prompt=None, tier="Gen-2.5-Medium", geometry_file_format="glb", 
+                        quality="medium", material="PBR", mesh_mode="Raw",
                         use_original_alpha=False, seed=None, quality_override=None,
                         TAPose=False, bbox_condition=None, addons=None,
-                        preview_render=False, poll_interval=10, max_retries=60):
+                        preview_render=False, hd_texture=False, texture_delight=False,
+                        texture_mode=None, is_micro=False,
+                        geometry_instruct_mode="faithful",
+                        poll_interval=10, max_retries=60):
         """
         Complete 3D model generation process: submit task, poll status, get download links
         
         Args:
             images: List of image files (up to 5 images)
             prompt: Text prompt (optional)
-            tier: Generation tier (default "Gen-2", options: "Smooth", "Regular", "Detail", "Sketch")
+            tier: Generation tier (default "Gen-2.5-Medium", options: 
+                  "Gen-2.5-Extreme-Low", "Gen-2.5-Low", "Gen-2.5-Medium", 
+                  "Gen-2.5-High", "Gen-2.5-Extreme-High", 
+                  "Gen-2", "Smooth", "Regular", "Detail", "Sketch")
             geometry_file_format: Output format ("glb", "usdz", "fbx", "obj", "stl")
             quality: Quality level ("high", "medium", "low", "extra-low")
             material: Material type ("PBR", "Shaded", "All")
@@ -182,6 +212,11 @@ class Hyper3DAPIClient:
             bbox_condition: Bounding box condition array [Width, Height, Length]
             addons: Addon features list (e.g., ["HighPack"])
             preview_render: Whether to generate preview render (default False)
+            hd_texture: Whether to generate HD texture (default False)
+            texture_delight: Whether to use texture delight feature (default False)
+            texture_mode: Texture mode (optional)
+            is_micro: Whether the object is micro-sized (default False)
+            geometry_instruct_mode: Geometry instruction mode ("faithful" or other options)
             poll_interval: Polling interval in seconds
             max_retries: Maximum number of retries
             
@@ -204,7 +239,12 @@ class Hyper3DAPIClient:
             TAPose=TAPose,
             bbox_condition=bbox_condition,
             addons=addons,
-            preview_render=preview_render
+            preview_render=preview_render,
+            hd_texture=hd_texture,
+            texture_delight=texture_delight,
+            texture_mode=texture_mode,
+            is_micro=is_micro,
+            geometry_instruct_mode=geometry_instruct_mode
         )
         
         if "error" in submit_result:

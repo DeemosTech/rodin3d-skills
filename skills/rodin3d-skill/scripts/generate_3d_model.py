@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Hyper3D Rodin Gen-2 Model Generator
+Hyper3D Rodin Gen-2.5 Model Generator
 
-This script generates 3D models from images or text prompts using the Hyper3D Rodin Gen-2 API.
+This script generates 3D models from images or text prompts using the Hyper3D Rodin Gen-2.5 API.
 """
 
 import os
@@ -22,9 +22,11 @@ def main():
     mode_group.add_argument("--prompt", help="Text prompt to generate 3D model from")
 
 
-    parser.add_argument("--tier", default="Sketch",
-                        choices=["Gen-2", "Smooth", "Regular", "Detail", "Sketch"],
-                        help="API tier to use (Gen-2, Smooth, Regular, Detail, Sketch)")
+    parser.add_argument("--tier", default="Gen-2.5-Medium",
+                        choices=["Gen-2.5-Extreme-Low", "Gen-2.5-Low", "Gen-2.5-Medium", 
+                                 "Gen-2.5-High", "Gen-2.5-Extreme-High",
+                                 "Gen-2", "Smooth", "Regular", "Detail", "Sketch"],
+                        help="API tier to use (Gen-2.5 tiers recommended for best quality)")
     
     parser.add_argument("--geometry-file-format", default="glb",
                         choices=["glb", "usdz", "fbx", "obj", "stl"],
@@ -63,6 +65,23 @@ def main():
     parser.add_argument("--preview-render", action="store_true",
                         help="Generate additional preview render image")
     
+    parser.add_argument("--hd-texture", action="store_true",
+                        help="Generate HD texture (Gen-2.5 feature)")
+    
+    parser.add_argument("--texture-delight", action="store_true",
+                        help="Use texture delight feature (Gen-2.5 feature)")
+    
+    parser.add_argument("--texture-mode", 
+                        help="Texture mode (Gen-2.5 feature)")
+    
+    parser.add_argument("--is-micro", action="store_true",
+                        help="Indicate the object is micro-sized (Gen-2.5 feature)")
+    
+
+    
+    parser.add_argument("--geometry-instruct-mode", default="faithful",
+                        help="Geometry instruction mode (Gen-2.5 feature, default: faithful)")
+    
     parser.add_argument("--api-key", help="Hyper3D API key (overrides environment variable)")
     
     parser.add_argument("--output", help="Output directory for 3D model")
@@ -77,38 +96,22 @@ def main():
     
     try:
         # Check Hyper3D API key
+        # Free test API key for evaluation purposes
+        FREE_TEST_API_KEY = "vibecoding"
         env_api_key = os.environ.get("HYPER3D_API_KEY")
         
-        # If user provided API key via command line argument, use it directly
+        # Priority: command line argument > environment variable > free test key
         if args.api_key:
             print("Using API key from command line argument")
             client = Hyper3DAPIClient(api_key=args.api_key)
         elif env_api_key:
-            # Found API key in environment variable, ask user if they want to use it
-            print(f"Found API key in environment variable: {env_api_key[:5]}...{env_api_key[-5:]}")
-            confirm = input("Do you want to use this API key? (y/n): ").strip().lower()
-            if confirm == 'y':
-                print("Using API key from environment variable")
-                client = Hyper3DAPIClient()
-            else:
-                # User denied, prompt user to enter API key
-                print("Please enter your Hyper3D API key:")
-                user_api_key = input().strip()
-                if user_api_key:
-                    print("Using provided API key")
-                    client = Hyper3DAPIClient(api_key=user_api_key)
-                else:
-                    raise ValueError("API key is required. Please set HYPER3D_API_KEY environment variable or pass it to the constructor.")
+            print(f"Using API key from environment variable: {env_api_key[:5]}...{env_api_key[-5:]}")
+            client = Hyper3DAPIClient()
         else:
-            # No API key in environment, prompt user to enter
-            print("No Hyper3D API key found in environment variable.")
-            print("Please enter your Hyper3D API key:")
-            user_api_key = input().strip()
-            if user_api_key:
-                print("Using provided API key")
-                client = Hyper3DAPIClient(api_key=user_api_key)
-            else:
-                raise ValueError("API key is required. Please set HYPER3D_API_KEY environment variable or pass it to the constructor.")
+            # Use free test API key when no key is provided
+            print(f"No API key provided. Using free test API key: {FREE_TEST_API_KEY}")
+            print("Note: The free test key has usage limits. For production use, obtain your own API key from https://hyper3d.ai/api-dashboard")
+            client = Hyper3DAPIClient(api_key=FREE_TEST_API_KEY)
             
         # Validate image input
         if args.image:
@@ -138,11 +141,16 @@ def main():
             "TAPose": args.tapose,
             "bbox_condition": args.bbox_condition,
             "addons": args.addons,
-            "preview_render": args.preview_render
+            "preview_render": args.preview_render,
+            "hd_texture": args.hd_texture,
+            "texture_delight": args.texture_delight,
+            "texture_mode": args.texture_mode,
+            "is_micro": args.is_micro,
+            "geometry_instruct_mode": args.geometry_instruct_mode
         }
         
         # Call API
-        print(f"Calling Hyper3D Rodin Gen-2 API ...")
+        print(f"Calling Hyper3D Rodin Gen-2.5 API ...")
         print(f"Input parameters: {kwargs}")
         print("This may take a few minutes...")
         
